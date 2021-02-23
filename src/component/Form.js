@@ -8,6 +8,7 @@ export default class Form extends Component {
   state = {
     name: "",
     number: "",
+    
   };
 
   static propTypes = {
@@ -49,6 +50,7 @@ export default class Form extends Component {
     this.setState({
       name: "",
       number: "",
+  
     });
   };
 

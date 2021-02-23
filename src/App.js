@@ -3,6 +3,13 @@ import "./index.css";
 import Contacts from "./component/Contacts";
 import Filter from "./component/Filter";
 import Form from "./component/Form";
+import Alert from './component/alert/Alert'
+
+import './component/alert/alert.css'
+import './component/contact.css'
+
+
+
 
 import {CSSTransition} from 'react-transition-group'
 
@@ -15,6 +22,7 @@ export default class App extends Component {
       { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
     ],
     filter: "",
+    error: false
   };
 
   componentDidMount() {
@@ -44,9 +52,12 @@ export default class App extends Component {
   handleCheckUnicue = (name) => {
     const { contacts } = this.state;
     const duplicete = !!contacts.find((contact) => contact.name === name);
-    duplicete && alert("Contact is already axist");
+    duplicete && this.setState({ error: true })
+
     return !duplicete;
   };
+
+
 
   hangleDelete = (contactId) => {
     this.setState((prevState) => ({
@@ -68,26 +79,46 @@ export default class App extends Component {
 
     return (
       <>
+       
+
         <CSSTransition
           in={true}
-          apper={true}
-          timeout={250}
+          appear={true}
+          timeout={500}
           classNames="title"
           unmountOnExit
         >
-          <h1>Phonebook</h1>
+          <h1 className="title">Phonebook</h1>
         </CSSTransition>
         
 
         <div className="container">
+
+       <CSSTransition in={this.state.error} classNames="alert" timeout={500} unmountOnExit >
+            <Alert />
+        </CSSTransition>
+        
           <Form
             onAdd={this.handleAddContact}
             onCheckUnigue={this.handleCheckUnicue}
           />
 
           <h2>Contacts</h2>
-          <Filter value={this.state.filter} onChange={this.changleFilter} />
-          <Contacts persons={visibleContacts} onDelete={this.hangleDelete} />
+
+          <CSSTransition in={this.state.contacts.length > 0 } classNames="contactItem" timeout={250} unmountOnExit>
+                <>
+            <Filter value={this.state.filter} onChange={this.changleFilter} />
+            
+              <Contacts persons={visibleContacts} onDelete={this.hangleDelete} />
+                    
+          </>
+          
+        </CSSTransition>
+       
+          
+      
+          
+         
         </div>
       </>
     );

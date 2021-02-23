@@ -2,15 +2,17 @@ import PropTypes from "prop-types";
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
-import style from "./contact.module.css";
+import  "./contact.css";
 
 
 
 const Contacts = ({ persons, onDelete }) => (
   <TransitionGroup component="ul">
+     
     {persons.map(({ id, name, number }) => (
-      <CSSTransition key={id} timeout={250} classNames="style" >
-          <li  className={style.contactItem} id={id}>
+      <CSSTransition key={id} timeout={250} classNames="contactItem">
+        
+       <li  className="contactItem" id={id}>
         <p>
           {name} {number}
         </p>
@@ -22,10 +24,13 @@ const Contacts = ({ persons, onDelete }) => (
         >
           Delete
         </button>
-      </li>
-    </CSSTransition>
+        </li>
+        </CSSTransition>
+   
     ))}
-</TransitionGroup>
+
+ </TransitionGroup>
+
 );
 
 Contacts.propTypes = {
