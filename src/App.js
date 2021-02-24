@@ -3,9 +3,10 @@ import "./index.css";
 import Contacts from "./component/Contacts";
 import Filter from "./component/Filter";
 import Form from "./component/Form";
-import Alert from './component/alert/Alert'
 
-import './component/alert/alert.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import './component/contact.css'
 
 
@@ -22,8 +23,7 @@ export default class App extends Component {
       { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
     ],
     filter: "",
-    error: false
-  };
+    };
 
   componentDidMount() {
     const contacts = localStorage.getItem("contacts");
@@ -52,7 +52,7 @@ export default class App extends Component {
   handleCheckUnicue = (name) => {
     const { contacts } = this.state;
     const duplicete = !!contacts.find((contact) => contact.name === name);
-    duplicete && this.setState({ error: true })
+    duplicete && toast.error('contact already  exists')
 
     return !duplicete;
   };
@@ -79,7 +79,7 @@ export default class App extends Component {
 
     return (
       <>
-       
+        <div className="container">
 
         <CSSTransition
           in={true}
@@ -92,11 +92,9 @@ export default class App extends Component {
         </CSSTransition>
         
 
-        <div className="container">
+       
 
-       <CSSTransition in={this.state.error} classNames="alert" timeout={500} unmountOnExit >
-            <Alert />
-        </CSSTransition>
+     
         
           <Form
             onAdd={this.handleAddContact}
@@ -117,7 +115,7 @@ export default class App extends Component {
        
           
       
-          
+          <ToastContainer autoClose={250} position="top-left"/> 
          
         </div>
       </>
